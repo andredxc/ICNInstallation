@@ -1,0 +1,75 @@
+27/05/2020 (Quarta)
+
+1)
+Gabriel não incluiu os arquivos usados nos experimentos. Não é um impeditivo, mas vou ter que refazer partes do trabalho que ele já fez e testou. Facilitaria minha vida, principalmente pq tem a parte do teste com redes IP que quase não vai ser alterado a nível de experimento.
+
+Montei um framework para envio/recebimento de pacotes por interesse. Falta definir como seriam gerados os interesses (ex. um pool de interesses acessado aleatoriamente, um pool com número igual de usos entre as opções, ... ver na dissertação)
+
+2)
+A parte da comunicação feita pelo Ryu é mais tranquila, o envio de pacotes ta mais bem definido nas modifiações do Gabriel. O que me preocupa é a parte do oftSwitch, olhando no código achei arquivos que lidam com leitura de payload dos pacotes recebidos. Faltaria testar pra validar mas, para fins de simulação, parece possível.
+
+3) - tirado
+A ideia seria "monitorar" a criação de flows no controlador e esperar até que todas as flows entre todos os pares de hosts fossem criadas? Sendo assim, tranquilo.
+
+4)
+A parte de controle de cache fica dentro do NFD com o nome de ContentStore. Ainda não variei os parâmetros de cache pra validar, mas sei quais são as funções/classes que lidam com isso. Novamente, facilitaria minha vida se o Gabriel me enviasse os códigos que ele usou para setar parâmetros de cache nos hosts a nível de experimento para que eu não tenha que refazer o trabalho dele.
+
+5)
+Entre oftSwitch <--> Ryu Ethernet, não sei qual versão mas acho que não importa
+Entre hosts <--> hosts Ethernet também, feito pelo minindn que importa funções do tipo do Mininet.
+
+
+15/06/2020 (Segunda)
+
+- Simulações com 100K, 200K, ...1KK requisições(interesses)
+  - Variar cache
+  - Variar TTL dos dados
+  - Dados criptografados
+  - Perdas nos enlaces
+
+- Alterar os cabeçalhos dos pacotes (vai fazer alguma diferença??)
+  Tamanho do cabeçalho e, principalmente, do payload.
+
+- Sobre como fazer as simulações
+  - Ter um pool de interesses e pacotes (como eu implementei até agora). Cada vez pegar um pacote aleatório e, se já foi criado, sem problema, mas se ainda não foi criado, sortear um outro nodo para ser o produtor desse pacote.
+
+- Tamanho dos pacotes
+
+- Quantos nodos vão ser simulados
+
+como trocar payload dos pacotes ethernet no miniNDN
+
+
+simulações
+
+- sensor só produz
+- periodicidade dos dados de controle de 1 min (=60 rodadas) TTL específico 60 segundos
+- tempo de missão: 1h
+- cada drone: 6 arquivos de vídeo (1 a cada 10 minutos) TTL=10min
+- cada humano: relatorios apenas (2 a cada 1h de missão) TTL=5min
+- cada sensor: 10 por missão TTL 2min
+
+caches
+
+- UAV: 8GB -> 32GB (tipo cartão de memória)
+- Humano: 8GB -> 32GB (tipo carão de memória)
+- Veículo: 5TB -> 10TB
+
+cabeçalho
+
+- Variando o cabeçalho e a taxa de perda nos enlaces, vale mais a pena procurar pelos valores do WIFI IMAX (ou algo parecido), que é o protocolo usado no militar
+
+Runião 26/06/2020
+
+o que eu fiz
+  - producer
+  - consumer
+  - experiment
+
+o que ficou na minha cabeça
+  - tempos de ttl considerando inexistencia de um tempo virtual no MiniNDN
+  - taxas do imax (perda e payload)
+
+- diferenciar perdas de enlace e por TTL
+  fazer alguma simulação pequena pra ter um feeling dos tempos
+    - ex instanciar varios pacotes do mesmo tipo (mesmo TTL) em um experimento simples e ver quanto expiram.
