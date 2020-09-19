@@ -1,0 +1,47 @@
+Email sent to the MiniNDN mailing list on Sat. 19/09/2020
+----------------------------------------------------
+Hi all,
+
+I'm having trouble getting MiniNDN up and running. I figured the easiest way to install is by using the vagrantfile. So I cloned the repo for named-data/mini-ndn and ran `vagrant up` inside it, which created the virtual machine in VirtualBox. I then proceeded to install miniNDN inside it via `sudo ./install.sh -a`, which downloaded and compiled everything successfully.
+
+The first thing I noticed is that it did not create a `minindn` symbolic link, which is not a real problem for me because running the python scripts inside the examples folder still starts minindn and lets me in to the mini-ndn> CLI. Just thought is was curious.
+
+Anyway, the real problem is that when I run `sudo python examples/mnndn.py`, everything starts and I get in to the CLI. But then, running pingall results in the following
+
+    mini-ndn> pingall
+    *** Ping: testing ping reachability
+    a -> b c X
+    b -> a X d
+    c -> X X X
+    d -> X X X
+    *** Results: 66% dropped (4/12 received)
+
+And after I run `sudo python examples/nlsr/pingall.py`, exit the CLI and run `grep -c content /tmp/minindn/*/ping-data/*.txt`, as stated in the documentation, I get the following:
+
+    /tmp/minindn/a/ping-data/b.txt:300
+    /tmp/minindn/a/ping-data/c.txt:300
+    /tmp/minindn/a/ping-data/d.txt:300
+    /tmp/minindn/b/ping-data/a.txt:300
+    /tmp/minindn/b/ping-data/c.txt:300
+    /tmp/minindn/b/ping-data/d.txt:300
+    /tmp/minindn/c/ping-data/a.txt:300
+    /tmp/minindn/c/ping-data/b.txt:300
+    /tmp/minindn/c/ping-data/d.txt:300
+    /tmp/minindn/d/ping-data/a.txt:300
+    /tmp/minindn/d/ping-data/b.txt:300
+    /tmp/minindn/d/ping-data/c.txt:300
+
+As oposed to the count of 50 that should be reported for each file.
+
+Running `grep -c timeout /tmp/minindn/*/ping-data/*.txt` yields the apparently correct result of 0 for each file.
+
+Note that I have already tried this same process on two different linux machines here. Having the same results.
+
+I believe these problems are the cause for another error that I'm having in my experiments, where I get NACK for every consumer when trying to run a simple producer/consumer scenario.
+
+Also, the documentation I refer to is this one: http://minindn.memphis.edu/install.html#using-install-sh
+
+
+Best regards,
+André Dexheimer Carneiro
+----------------------------------------------------

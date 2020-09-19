@@ -124,5 +124,5 @@ It will be able to communicate between 2 NDN hosts using only the name "drone".
 d1 -> d2 = ~10
 d1 -> r1 = ~6.5
 
-Install MiniNDN vm from vagrant file
-When installation is done, run ./install.sh -i; install bison, flex, m4 and another one
+Install MiniNDN vm from vagrant file.
+When installation is done, run ./install.sh -i; install bison, flex, m4, libxml2-dev and another one
